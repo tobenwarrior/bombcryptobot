@@ -9,22 +9,35 @@ restall = 'imgs/restall.png'
 heroesback = 'imgs/heroesback.png'
 
 numberOfBrowsers = 5
+timeToWaitForBrowser = 10
+timeToNextCycleInSeconds = 60
 
 def clickImageForAll(img):
     #back to main menu
-    limitSearch = 1000
+    limitSearch = 0
     locations = pyautogui.locateAllOnScreen(img)
     locationCount = sum(1 for x in locations)
-    print(locationCount)
-    while(locationCount < numberOfBrowsers or limitSearch < 10):
-        time.sleep(3)
+    while(locationCount < numberOfBrowsers and limitSearch < timeToWaitForBrowser):
+        time.sleep(1)
         locations = pyautogui.locateAllOnScreen(img)
         locationCount = sum(1 for x in locations)
         limitSearch+=1
+        print('browser failed:' + str(locationCount) + '    times searched: ' + str(limitSearch))
     
+    print('all locations found succeeded:' + str(locationCount))
     for i in pyautogui.locateAllOnScreen(img):
-        time.sleep(0.5)
-        pyautogui.click(img)
+        pyautogui.click(i)
+
+    time.sleep(1)
+
+def WaitForNextCycle(timeWaited):
+    if timeWaited >= timeToNextCycleInSeconds:
+        runProgram()
+    else:
+        time.sleep(1)
+        timeWaited = timeWaited + 1
+        print('time to next cycle: ' + str(timeToNextCycleInSeconds - timeWaited))
+        WaitForNextCycle(timeWaited)
 
 def runProgram():
     clickImageForAll(backbutton)
@@ -32,8 +45,8 @@ def runProgram():
     clickImageForAll(workall)
     clickImageForAll(heroesback)
     clickImageForAll(treasurehunt)
-    time.sleep(60)
-    runProgram()
+    WaitForNextCycle(0)
+
 
 #initial run
 runProgram()
