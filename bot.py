@@ -41,7 +41,7 @@ def ClickImageForAll(img):
     time.sleep(5)
 
 def WaitForNextCycle(timeWaited):
-    timeToWait = randomNumber(timeToNextCycleInSeconds)
+    timeToWait = timeToNextCycleInSeconds
     if timeWaited >= timeToWait:
         runProgram()
     else:
@@ -64,6 +64,9 @@ def runProgram():
 
     ClickImageForAll(heroesback)
     ClickImageForAll(treasurehunt)
+
+    global timeToNextCycleInSeconds
+    timeToNextCycleInSeconds = randomNumber(timeToNextCycleInSeconds)
     WaitForNextCycle(0)
 
 
