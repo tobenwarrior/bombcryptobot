@@ -26,9 +26,16 @@ def clickImageForAll(img):
         time.sleep(0.5)
         pyautogui.click(img)
 
-clickImageForAll(backbutton)
-clickImageForAll(heroes)
-clickImageForAll(workall)
-clickImageForAll(heroesback)
-clickImageForAll(treasurehunt)
+def runProgram():
+    clickImageForAll(backbutton)
+    clickImageForAll(heroes)
+    clickImageForAll(workall)
+    clickImageForAll(heroesback)
+    clickImageForAll(treasurehunt)
+    time.sleep(60)
+    runProgram()
+
+#initial run
+runProgram()
+
 
