@@ -14,7 +14,7 @@ numberOfBrowsers = 5
 timeToWaitForPageToLoad = 10
 timeToNextCycleInSeconds = 600
 
-resting = False
+resting = True
 
 def randomNumber(number):
     maxRange = number + 20
@@ -42,13 +42,11 @@ def ClickImageForAll(img):
 
 def WaitForNextCycle(timeWaited):
     timeToWait = timeToNextCycleInSeconds
-    if timeWaited >= timeToNextCycleInSeconds:
-        runProgram()
-    else:
+    while(timeWaited < timeToNextCycleInSeconds):
         time.sleep(1)
-        timeWaited = timeWaited + 1
+        timeWaited+=1
         print('time to next cycle: ' + str(timeToWait - timeWaited))
-        WaitForNextCycle(timeWaited)
+    runProgram()
 
 def runProgram():
     ClickImageForAll(backbutton)
