@@ -10,7 +10,7 @@ restall = 'imgs/restall.png'
 heroesback = 'imgs/heroesback.png'
 
 addRest = True
-numberOfBrowsers = 5
+numberOfBrowsers = 6
 timeToWaitForPageToLoad = 10
 timeBetweenActions = 3
 restDuration = 2500
