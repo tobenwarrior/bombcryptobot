@@ -32,7 +32,7 @@ def ClickImageForAll(img):
         timeWaited+=1
         locations = pyautogui.locateAllOnScreen(img)
         locationCount = sum(1 for x in locations)    
-        print('browser found:' + str(locationCount) + "/" + str(numberOfBrowsers) + '    time to search again: ' + str(timeWaited))
+        print('browser found:' + str(locationCount) + "/" + str(numberOfBrowsers) + '    searching for: ' + str(timeWaited))
     
     print('all locations found succeeded:' + str(locationCount))
     for i in pyautogui.locateAllOnScreen(img):
@@ -42,7 +42,7 @@ def ClickImageForAll(img):
 
 def WaitForNextCycle(timeWaited):
     timeToWait = timeToNextCycleInSeconds
-    if timeWaited >= timeToWait:
+    if timeWaited >= timeToNextCycleInSeconds:
         runProgram()
     else:
         time.sleep(1)
