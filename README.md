@@ -1,0 +1,2 @@
+# bombcryptobot
+shit bot
