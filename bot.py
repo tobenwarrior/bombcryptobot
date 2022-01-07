@@ -13,7 +13,7 @@ addRest = True
 numberOfBrowsers = 5
 timeToWaitForPageToLoad = 10
 timeBetweenActions = 3
-restDuration = 1000
+restDuration = 800
 workDuration = 600
 
 resting = True
@@ -44,12 +44,18 @@ def ClickImageForAll(img):
 
 def WaitForNextCycle():
     timeWaited = 0
+    timeRested = 0
     timeToWait = restDuration
     timeToWait = restDuration if resting else workDuration
     while(timeWaited < timeToWait):
         time.sleep(1)
         timeWaited+=1
         if(resting):
+            timeRested+=1
+            if timeRested >= 200:
+                ClickImageForAll(backbutton)
+                ClickImageForAll(treasurehunt)
+                timeRested = 0
             print('resting time left: ' + str(timeToWait - timeWaited))
         else:
             print('working time left: ' + str(timeToWait - timeWaited))
