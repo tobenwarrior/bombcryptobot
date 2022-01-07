@@ -13,8 +13,8 @@ addRest = True
 numberOfBrowsers = 5
 timeToWaitForPageToLoad = 10
 timeBetweenActions = 3
-restDuration = 3000
-workDuration = 1000
+restDuration = 2500
+workDuration = 600
 
 resting = True
 
