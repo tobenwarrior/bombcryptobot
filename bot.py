@@ -71,10 +71,10 @@ def runProgram(nob, tfpl, tba, rd, wd):
     if addRest:
         if(resting):
             ClickImageForAll(workall)
-            restDuration = int(rd)
+            restDuration = randomNumber(int(rd))
         else:
             ClickImageForAll(restall)
-            workDuration = int(wd)
+            workDuration = randomNumber(int(wd))
         resting = not resting
 
     ClickImageForAll(heroesback)
@@ -82,7 +82,7 @@ def runProgram(nob, tfpl, tba, rd, wd):
 
     numberOfBrowsers = int(nob)
     timeToWaitForPageToLoad = int(tfpl)
-    restDuration = randomNumber(int(tba))
+    timeBetweenActions = int(tba)
 
     WaitForNextCycle()
 
