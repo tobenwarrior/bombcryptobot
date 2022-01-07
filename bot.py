@@ -8,13 +8,15 @@ workall = 'imgs/workall.png'
 restall = 'imgs/restall.png'
 heroesback = 'imgs/heroesback.png'
 
+numberOfBrowsers = 5
+
 def clickImageForAll(img):
     #back to main menu
     limitSearch = 1000
     locations = pyautogui.locateAllOnScreen(img)
     locationCount = sum(1 for x in locations)
     print(locationCount)
-    while(locationCount < 5 or limitSearch < 10):
+    while(locationCount < numberOfBrowsers or limitSearch < 10):
         time.sleep(3)
         locations = pyautogui.locateAllOnScreen(img)
         locationCount = sum(1 for x in locations)
