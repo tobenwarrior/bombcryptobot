@@ -12,7 +12,9 @@ heroesback = 'imgs/heroesback.png'
 addRest = True
 numberOfBrowsers = 5
 timeToWaitForPageToLoad = 10
-timeToNextCycleInSeconds = 600
+timeBetweenActions = 3
+restDuration = 1000
+workDuration = 600
 
 resting = True
 
@@ -24,7 +26,7 @@ def randomNumber(number):
 def ClickImageForAll(img):
     #back to main menu
     timeWaited = 0
-    locations = pyautogui.locateAllOnScreen(img)
+    locations = pyautogui.locateAllOnScreen(img, confidence = 0.9)
     locationCount = sum(1 for x in locations)
     
     while(locationCount < numberOfBrowsers and timeWaited < timeToWaitForPageToLoad):
@@ -35,40 +37,53 @@ def ClickImageForAll(img):
         print('browser found:' + str(locationCount) + "/" + str(numberOfBrowsers) + '    searching for: ' + str(timeWaited))
     
     print('all locations found succeeded:' + str(locationCount))
-    for i in pyautogui.locateAllOnScreen(img):
+    for i in pyautogui.locateAllOnScreen(img, confidence = 0.9):
         pyautogui.click(i)
 
-    time.sleep(5)
+    time.sleep(timeBetweenActions)
 
-def WaitForNextCycle(timeWaited):
-    timeToWait = timeToNextCycleInSeconds
-    while(timeWaited < timeToNextCycleInSeconds):
+def WaitForNextCycle():
+    timeWaited = 0
+    timeToWait = restDuration
+    timeToWait = restDuration if resting else workDuration
+    while(timeWaited < timeToWait):
         time.sleep(1)
         timeWaited+=1
-        print('time to next cycle: ' + str(timeToWait - timeWaited))
-    runProgram()
+        if(resting):
+            print('resting time left: ' + str(timeToWait - timeWaited))
+        else:
+            print('working time left: ' + str(timeToWait - timeWaited))
 
-def runProgram():
+    runProgram(numberOfBrowsers, timeToWaitForPageToLoad, timeBetweenActions, restDuration, workDuration)
+
+def runProgram(nob, tfpl, tba, rd, wd):
+    global numberOfBrowsers
+    global timeToWaitForPageToLoad
+    global timeBetweenActions
+    global restDuration
+    global workDuration
+    global resting
+
+    time.sleep(1)
     ClickImageForAll(backbutton)
     ClickImageForAll(heroes)
 
-    global resting
     if addRest:
         if(resting):
             ClickImageForAll(workall)
+            restDuration = int(rd)
         else:
             ClickImageForAll(restall)
+            workDuration = int(wd)
         resting = not resting
 
     ClickImageForAll(heroesback)
     ClickImageForAll(treasurehunt)
 
-    global timeToNextCycleInSeconds
-    timeToNextCycleInSeconds = randomNumber(timeToNextCycleInSeconds)
-    WaitForNextCycle(0)
+    numberOfBrowsers = int(nob)
+    timeToWaitForPageToLoad = int(tfpl)
+    restDuration = randomNumber(int(tba))
 
-
-#initial run
-runProgram()
+    WaitForNextCycle()
 
 
