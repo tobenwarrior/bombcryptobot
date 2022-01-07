@@ -1,4 +1,4 @@
-from numpy import number
+import random
 import pyautogui
 import time
 
@@ -15,6 +15,11 @@ timeToWaitForPageToLoad = 10
 timeToNextCycleInSeconds = 600
 
 resting = False
+
+def randomNumber(number):
+    maxRange = number + 20
+    minRange = number - 20
+    return random.randint(minRange,maxRange)
 
 def ClickImageForAll(img):
     #back to main menu
@@ -36,12 +41,13 @@ def ClickImageForAll(img):
     time.sleep(5)
 
 def WaitForNextCycle(timeWaited):
-    if timeWaited >= timeToNextCycleInSeconds:
+    timeToWait = randomNumber(timeToNextCycleInSeconds)
+    if timeWaited >= timeToWait:
         runProgram()
     else:
         time.sleep(1)
         timeWaited = timeWaited + 1
-        print('time to next cycle: ' + str(timeToNextCycleInSeconds - timeWaited))
+        print('time to next cycle: ' + str(timeToWait - timeWaited))
         WaitForNextCycle(timeWaited)
 
 def runProgram():
