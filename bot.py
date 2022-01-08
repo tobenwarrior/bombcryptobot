@@ -68,9 +68,11 @@ def ClickImageForAll(img):
     while(locationCount < numberOfBrowsers and timeWaited < timeToWaitForPageToLoad):
         time.sleep(1)
         # check if disconnect
-        while(Disconnect()):
-            time.sleep(0.5)
+        timeWaitedForDisconnectedBrowser = 0
+        while(Disconnect() and timeWaitedForDisconnectedBrowser < 5):
+            time.sleep(1)
             timeWaited = 0
+            timeWaitedForDisconnectedBrowser + 1
         timeWaited+=1
         locations = pyautogui.locateAllOnScreen(img)
         locationCount = sum(1 for x in locations)    
