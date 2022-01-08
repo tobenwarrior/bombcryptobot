@@ -15,10 +15,12 @@ menulogo = 'imgs/menulogo.png'
 
 addRest = True
 numberOfBrowsers = 6
-timeToWaitForPageToLoad = 10
+timeToWaitForPageToLoad = 5
 timeBetweenActions = 3
 restDuration = 1000
 workDuration = 2000
+
+timeWaited = 0
 
 resting = True
 
@@ -32,10 +34,12 @@ def ClickLocations(locations):
         pyautogui.click(i)
 
 def Disconnect():
-    isInMenu = pyautogui.locateAllOnScreen(menulogo, confidence = 1)
     isOk = pyautogui.locateAllOnScreen(ok, confidence = 0.9)
-    disconnectedBrowsers =  sum(1 for x in isInMenu) + sum(1 for x in isOk)
+    isConnectWallet = pyautogui.locateAllOnScreen(connectwallet, confidence = 0.9)
+    isSignIn = pyautogui.locateAllOnScreen(signin, confidence = 0.9)
+    disconnectedBrowsers =  sum(1 for x in isConnectWallet) + sum(1 for x in isOk) + sum(1 for x in isSignIn)
     isDisconnected = False
+
 
     for i in pyautogui.locateAllOnScreen(ok, confidence = 0.9):
         pyautogui.click(i)
@@ -44,15 +48,19 @@ def Disconnect():
     for i in pyautogui.locateAllOnScreen(signin, confidence = 0.9):
         pyautogui.click(i)
 
+
     if(disconnectedBrowsers > 0):
+        time.sleep(3)
+        global timeWaited
+        timeWaited = 0
         print("browsers disconnected: " + str(disconnectedBrowsers))
         isDisconnected = True
-    time.sleep(3)
     return isDisconnected
 
 
 def ClickImageForAll(img):
     # back to main menu
+    global timeWaited
     timeWaited = 0
     locations = pyautogui.locateAllOnScreen(img, confidence = 0.9)
     locationCount = sum(1 for x in locations)
@@ -109,11 +117,11 @@ def runProgram(nob, tfpl, tba, rd, wd):
     timeToWaitForPageToLoad = int(tfpl)
     timeBetweenActions = int(tba)
 
-    print("Number of browsers: " + str(numberOfBrowsers))
+    print("number of browsers: " + str(numberOfBrowsers))
     print("time to wait for page to load: " + str(timeToWaitForPageToLoad))
     print("time between actions: " + str(timeBetweenActions))
-    print("Rest Duration: " + str(restDuration))
-    print("Work Duration: " + str(workDuration))
+    print("rest Duration: " + str(restDuration))
+    print("work Duration: " + str(workDuration))
 
     time.sleep(1)
     ClickImageForAll(backbutton)
