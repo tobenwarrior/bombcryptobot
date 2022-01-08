@@ -39,12 +39,12 @@ def Disconnect():
     
     for i in pyautogui.locateAllOnScreen(ok, confidence = 0.9):
         pyautogui.click(i)
-        time.sleep(3)
     for i in pyautogui.locateAllOnScreen(connectwallet, confidence = 0.9):
         pyautogui.click(i)
     for i in pyautogui.locateAllOnScreen(signin, confidence = 0.9):
         pyautogui.click(i)
 
+    time.sleep(3)
     if(disconnectedBrowsers > 0):
         return True
 
@@ -60,6 +60,7 @@ def ClickImageForAll(img):
         # check if disconnect
         while(Disconnect()):
             time.sleep(0.5)
+            timeWaited = 0
         timeWaited+=1
         locations = pyautogui.locateAllOnScreen(img)
         locationCount = sum(1 for x in locations)    
