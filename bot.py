@@ -35,8 +35,8 @@ def Disconnect():
     isInMenu = pyautogui.locateAllOnScreen(menulogo, confidence = 1)
     isOk = pyautogui.locateAllOnScreen(ok, confidence = 0.9)
     disconnectedBrowsers =  sum(1 for x in isInMenu) + sum(1 for x in isOk)
-    print("browsers disconnected: " + str(disconnectedBrowsers))
-    
+    isDisconnected = False
+
     for i in pyautogui.locateAllOnScreen(ok, confidence = 0.9):
         pyautogui.click(i)
     for i in pyautogui.locateAllOnScreen(connectwallet, confidence = 0.9):
@@ -44,9 +44,11 @@ def Disconnect():
     for i in pyautogui.locateAllOnScreen(signin, confidence = 0.9):
         pyautogui.click(i)
 
-    time.sleep(3)
     if(disconnectedBrowsers > 0):
-        return True
+        print("browsers disconnected: " + str(disconnectedBrowsers))
+        isDisconnected = True
+    time.sleep(3)
+    return isDisconnected
 
 
 def ClickImageForAll(img):
