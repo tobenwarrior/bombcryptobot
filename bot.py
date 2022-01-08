@@ -8,36 +8,65 @@ heroes = 'imgs/heroes.png'
 workall = 'imgs/workall.png'
 restall = 'imgs/restall.png'
 heroesback = 'imgs/heroesback.png'
+ok = 'imgs/ok.png'
+connectwallet = 'imgs/connectwallet.png'
+signin = 'imgs/signin.png'
+menulogo = 'imgs/menulogo.png'
 
 addRest = True
 numberOfBrowsers = 6
 timeToWaitForPageToLoad = 10
 timeBetweenActions = 3
-restDuration = 2500
-workDuration = 600
+restDuration = 1000
+workDuration = 2000
 
 resting = True
 
-def randomNumber(number):
+def RandomNumber(number):
     maxRange = number + 20
     minRange = number - 20
     return random.randint(minRange,maxRange)
 
+def ClickLocations(locations):
+    for i in locations:
+        pyautogui.click(i)
+
+def Disconnect():
+    isInMenu = pyautogui.locateAllOnScreen(menulogo, confidence = 1)
+    isOk = pyautogui.locateAllOnScreen(ok, confidence = 0.9)
+    disconnectedBrowsers =  sum(1 for x in isInMenu) + sum(1 for x in isOk)
+    print("browsers disconnected: " + str(disconnectedBrowsers))
+    
+    for i in pyautogui.locateAllOnScreen(ok, confidence = 0.9):
+        pyautogui.click(i)
+        time.sleep(3)
+    for i in pyautogui.locateAllOnScreen(connectwallet, confidence = 0.9):
+        pyautogui.click(i)
+    for i in pyautogui.locateAllOnScreen(signin, confidence = 0.9):
+        pyautogui.click(i)
+
+    if(disconnectedBrowsers > 0):
+        return True
+
+
 def ClickImageForAll(img):
-    #back to main menu
+    # back to main menu
     timeWaited = 0
     locations = pyautogui.locateAllOnScreen(img, confidence = 0.9)
     locationCount = sum(1 for x in locations)
     
     while(locationCount < numberOfBrowsers and timeWaited < timeToWaitForPageToLoad):
         time.sleep(1)
+        # check if disconnect
+        while(Disconnect()):
+            time.sleep(0.5)
         timeWaited+=1
         locations = pyautogui.locateAllOnScreen(img)
         locationCount = sum(1 for x in locations)    
         print('browser found:' + str(locationCount) + "/" + str(numberOfBrowsers) + '    searching for: ' + str(timeWaited))
     
     print('all locations found succeeded:' + str(locationCount))
-    for i in pyautogui.locateAllOnScreen(img, confidence = 0.9):
+    for i in pyautogui.locateAllOnScreen(img):
         pyautogui.click(i)
 
     time.sleep(timeBetweenActions)
@@ -73,6 +102,16 @@ def runProgram(nob, tfpl, tba, rd, wd):
     global workDuration
     global resting
 
+    numberOfBrowsers = int(nob)
+    timeToWaitForPageToLoad = int(tfpl)
+    timeBetweenActions = int(tba)
+
+    print("Number of browsers: " + str(numberOfBrowsers))
+    print("time to wait for page to load: " + str(timeToWaitForPageToLoad))
+    print("time between actions: " + str(timeBetweenActions))
+    print("Rest Duration: " + str(restDuration))
+    print("Work Duration: " + str(workDuration))
+
     time.sleep(1)
     ClickImageForAll(backbutton)
     ClickImageForAll(heroes)
@@ -80,19 +119,14 @@ def runProgram(nob, tfpl, tba, rd, wd):
     if addRest:
         if(resting):
             ClickImageForAll(workall)
-            restDuration = randomNumber(int(rd))
+            restDuration = RandomNumber(int(rd))
         else:
             ClickImageForAll(restall)
-            workDuration = randomNumber(int(wd))
+            workDuration = RandomNumber(int(wd))
         resting = not resting
 
     ClickImageForAll(heroesback)
     ClickImageForAll(treasurehunt)
-
-    numberOfBrowsers = int(nob)
-    timeToWaitForPageToLoad = int(tfpl)
-    timeBetweenActions = int(tba)
-
     WaitForNextCycle()
 
 

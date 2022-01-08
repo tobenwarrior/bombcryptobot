@@ -1,6 +1,4 @@
 import tkinter as tk
-
-from numpy import number
 from bot import *
 
 def RunBot():
@@ -9,11 +7,6 @@ def RunBot():
     timeBetweenActions = timeBetweenActionsInput.get()
     restDuration = restDurationInput.get()
     workDuration = workDurationInput.get()
-    print("Number of browsers: " + numberOfBrowsers)
-    print("time to wait for page to load: " + timeToWaitForPageToLoad)
-    print("time between actions: " + timeBetweenActions)
-    print("Rest Duration: " + restDuration)
-    print("Work Duration: " + workDuration)
     root.destroy()
     runProgram(numberOfBrowsers, timeToWaitForPageToLoad, timeBetweenActions, restDuration, workDuration)
 
