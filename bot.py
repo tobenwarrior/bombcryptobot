@@ -15,6 +15,7 @@ ok = 'imgs/ok.png'
 connectwallet = 'imgs/connectwallet.png'
 signin = 'imgs/signin.png'
 menulogo = 'imgs/menulogo.png'
+signaturerequest = 'imgs/signaturerequest.png'
 
 addRest = True
 numberOfBrowsers = 6
@@ -40,7 +41,8 @@ def Disconnect():
     isOk = pyautogui.locateAllOnScreen(ok, confidence = 0.9)
     isConnectWallet = pyautogui.locateAllOnScreen(connectwallet, confidence = 0.9)
     isSignIn = pyautogui.locateAllOnScreen(signin, confidence = 0.9)
-    disconnectedBrowsers =  sum(1 for x in isConnectWallet) + sum(1 for x in isOk) + sum(1 for x in isSignIn)
+    isSignatureRequest = pyautogui.locateAllOnScreen(signaturerequest, confidence = 0.9)
+    disconnectedBrowsers =  sum(1 for x in isConnectWallet) + sum(1 for x in isOk) + sum(1 for x in isSignIn) + sum(1 for x in isSignatureRequest)
     isDisconnected = False
 
 
@@ -49,6 +51,8 @@ def Disconnect():
     for i in pyautogui.locateAllOnScreen(connectwallet, confidence = 0.9):
         pyautogui.click(i)
     for i in pyautogui.locateAllOnScreen(signin, confidence = 0.9):
+        pyautogui.click(i)
+    for i in pyautogui.locateAllOnScreen(signaturerequest, confidence = 0.9):
         pyautogui.click(i)
 
 
