@@ -16,6 +16,7 @@ connectwallet = 'imgs/connectwallet.png'
 signin = 'imgs/signin.png'
 menulogo = 'imgs/menulogo.png'
 signaturerequest = 'imgs/signaturerequest.png'
+connect = 'imgs/connect.png'
 
 addRest = True
 numberOfBrowsers = 6
@@ -45,15 +46,29 @@ def Disconnect():
     disconnectedBrowsers =  sum(1 for x in isConnectWallet) + sum(1 for x in isOk) + sum(1 for x in isSignIn) + sum(1 for x in isSignatureRequest)
     isDisconnected = False
 
-
     for i in pyautogui.locateAllOnScreen(ok, confidence = 0.9):
-        pyautogui.click(i)
+            location = i
+            x,y = pyautogui.center(location)
+            pyautogui.click(x,y)
     for i in pyautogui.locateAllOnScreen(connectwallet, confidence = 0.9):
-        pyautogui.click(i)
+            location = i
+            x,y = pyautogui.center(location)
+            pyautogui.click(x,y)
+    for i in pyautogui.locateAllOnScreen(connect, confidence = 0.9):
+            location = i
+            x,y = pyautogui.center(location)
+            pyautogui.click(x,y)
     for i in pyautogui.locateAllOnScreen(signin, confidence = 0.9):
-        pyautogui.click(i)
-    for i in pyautogui.locateAllOnScreen(signaturerequest, confidence = 0.9):
-        pyautogui.click(i)
+            location = i
+            x,y = pyautogui.center(location)
+            pyautogui.click(x,y)
+        
+    if(sum(1 for x in isSignatureRequest) > 0):
+        time.sleep(0.5)
+        for i in pyautogui.locateAllOnScreen(signaturerequest, confidence = 0.9):
+            location = i
+            x,y = pyautogui.center(location)
+            pyautogui.click(x,y)
 
 
     if(disconnectedBrowsers > 0):
@@ -87,7 +102,9 @@ def ClickImageForAll(img):
     
     print('all locations found succeeded:' + str(locationCount))
     for i in pyautogui.locateAllOnScreen(img):
-        pyautogui.click(i)
+        location = i
+        x,y = pyautogui.center(location)
+        pyautogui.click(x,y)
 
     time.sleep(timeBetweenActions)
 
